@@ -14,6 +14,8 @@
 
 </div>
 
+> 💡 Diagrams in this README are written in [Mermaid](https://mermaid.js.org/) and render automatically on GitHub, GitLab, and most modern Markdown viewers (including VS Code with the Mermaid extension).
+
 ---
 
 ## 📖 Table of Contents
@@ -61,40 +63,48 @@ This system addresses each of these with **Natural Language Processing (NLP)** a
 
 ## 🏗️ System Architecture
 
-```
-┌─────────────────────┐
-│     Job Sources      │
-│  LinkedIn / APIs /   │
-│  Company Portals     │
-└──────────┬───────────┘
-           │
-           ▼
-┌─────────────────────┐
-│   Data Ingestion      │
-└──────────┬───────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Deduplication Layer   │
-└──────────┬───────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ NLP Skill Extraction  │
-└──────────┬───────────┘
-           │
-           ▼
-┌─────────────────────┐
-│   Matching Engine      │
-└──────────┬───────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  Personalized Feed    │
-└─────────────────────┘
+```mermaid
+flowchart TD
+    A["📡 Job Sources<br/>LinkedIn / APIs / Company Portals"] --> B["📥 Data Ingestion"]
+    B --> C["🧹 Deduplication Layer<br/>Fuzzy match · Normalization"]
+    C --> D["🧠 NLP Skill Extraction<br/>spaCy"]
+    D --> E["🎯 Matching Engine<br/>TF-IDF · Cosine Similarity"]
+    E --> F["📊 Personalized Feed"]
+
+    U["👤 User Skill Profile"] --> E
+
+    style A fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    style B fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    style C fill:#fef3c7,stroke:#d97706,color:#78350f
+    style D fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    style E fill:#dcfce7,stroke:#16a34a,color:#14532d
+    style F fill:#fce7f3,stroke:#db2777,color:#831843
+    style U fill:#f1f5f9,stroke:#475569,color:#1e293b
 ```
 
 Each stage is decoupled, so sources, dedup logic, or the matching algorithm can evolve independently without breaking the pipeline.
+
+### 🔁 Request-Level Flow
+
+```mermaid
+sequenceDiagram
+    actor U as User
+    participant FE as Frontend (Next.js)
+    participant API as Backend (FastAPI)
+    participant DB as PostgreSQL
+    participant AI as AI Engine (NLP + Matcher)
+
+    U->>FE: Log in / update skill profile
+    FE->>API: POST /skills
+    API->>DB: Save skills
+    U->>FE: Open job feed
+    FE->>API: GET /feed
+    API->>DB: Fetch active jobs
+    API->>AI: Extract skills + compute match scores
+    AI-->>API: Ranked jobs with match %
+    API-->>FE: Personalized job feed
+    FE-->>U: Display matches, gaps & scores
+```
 
 ## ✨ Key Features
 
@@ -147,7 +157,17 @@ Every recommended job shows:
 ### 📌 Application Tracker
 Tracks each job through its lifecycle:
 
-`Saved → Applied → Interviewing → Offered / Rejected`
+```mermaid
+stateDiagram-v2
+    [*] --> Saved
+    Saved --> Applied
+    Applied --> Interviewing
+    Interviewing --> Offered
+    Interviewing --> Rejected
+    Applied --> Rejected
+    Offered --> [*]
+    Rejected --> [*]
+```
 
 ## 🛠️ Tech Stack
 
@@ -191,6 +211,48 @@ skill-centric-job-search/
 ```
 
 ## 🗄️ Database Schema
+
+```mermaid
+erDiagram
+    USERS ||--o{ USER_SKILLS : has
+    SKILLS ||--o{ USER_SKILLS : "listed in"
+    SKILLS ||--o{ JOB_SKILLS : "required by"
+    JOBS ||--o{ JOB_SKILLS : requires
+    USERS ||--o{ APPLICATIONS : submits
+    JOBS ||--o{ APPLICATIONS : receives
+
+    USERS {
+        int id PK
+        string name
+        string email
+        string password
+    }
+    SKILLS {
+        int id PK
+        string skill_name
+    }
+    JOBS {
+        int id PK
+        string title
+        string company
+        string location
+        text description
+    }
+    USER_SKILLS {
+        int user_id FK
+        int skill_id FK
+    }
+    JOB_SKILLS {
+        int job_id FK
+        int skill_id FK
+    }
+    APPLICATIONS {
+        int id PK
+        int user_id FK
+        int job_id FK
+        string status
+    }
+```
 
 <details>
 <summary><strong>Click to expand table definitions</strong></summary>
