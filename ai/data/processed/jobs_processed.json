@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "title": "Python Developer",
+        "company": "Google",
+        "skills": [
+            "Python",
+            "SQL",
+            "AWS",
+            "Docker"
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Backend Engineer",
+        "company": "Amazon",
+        "skills": [
+            "Python",
+            "PostgreSQL",
+            "Docker",
+            "FastAPI"
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Full Stack Developer",
+        "company": "Microsoft",
+        "skills": [
+            "JavaScript",
+            "MongoDB",
+            "Git",
+            "React",
+            "Node.js"
+        ]
+    },
+    {
+        "id": 4,
+        "title": "DevOps Engineer",
+        "company": "Infosys",
+        "skills": [
+            "AWS",
+            "Docker",
+            "Kubernetes",
+            "Jenkins"
+        ]
+    },
+    {
+        "id": 5,
+        "title": "Software Engineer",
+        "company": "TCS",
+        "skills": [
+            "Java",
+            "MySQL",
+            "Git",
+            "Spring Boot"
+        ]
+    },
+    {
+        "id": 6,
+        "title": "Data Scientist",
+        "company": "IBM",
+        "skills": [
+            "Python",
+            "SQL",
+            "Scikit-Learn",
+            "Pandas",
+            "NumPy"
+        ]
+    },
+    {
+        "id": 7,
+        "title": "Machine Learning Engineer",
+        "company": "Accenture",
+        "skills": [
+            "Python",
+            "AWS",
+            "TensorFlow",
+            "PyTorch"
+        ]
+    },
+    {
+        "id": 8,
+        "title": "Frontend Developer",
+        "company": "Wipro",
+        "skills": [
+            "JavaScript",
+            "TypeScript",
+            "Git",
+            "React"
+        ]
+    }
+]
