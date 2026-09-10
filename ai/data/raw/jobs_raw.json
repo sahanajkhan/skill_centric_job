@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "Python Developer",
+    "company": "Google",
+    "description": "Looking for a Python Developer with SQL, Docker and AWS experience."
+  },
+  {
+    "id": 2,
+    "title": "Backend Engineer",
+    "company": "Amazon",
+    "description": "Experience with Python, FastAPI, PostgreSQL and Docker."
+  },
+  {
+    "id": 3,
+    "title": "Full Stack Developer",
+    "company": "Microsoft",
+    "description": "Need React, Node.js, JavaScript, MongoDB and Git."
+  },
+  {
+    "id": 4,
+    "title": "DevOps Engineer",
+    "company": "Infosys",
+    "description": "Hands-on experience with AWS, Kubernetes, Docker and Jenkins."
+  },
+  {
+    "id": 5,
+    "title": "Software Engineer",
+    "company": "TCS",
+    "description": "Strong knowledge of Java, Spring Boot, MySQL and Git."
+  },
+{
+  "id": 6,
+  "title": "Data Scientist",
+  "company": "IBM",
+  "description": "Experience with Python, Pandas, NumPy, Scikit-Learn and SQL."
+},
+{
+  "id": 7,
+  "title": "Machine Learning Engineer",
+  "company": "Accenture",
+  "description": "Strong knowledge of Python, TensorFlow, PyTorch and AWS."
+},
+{
+  "id": 8,
+  "title": "Frontend Developer",
+  "company": "Wipro",
+  "description": "Need React, JavaScript, TypeScript and Git experience."
+}
+]
