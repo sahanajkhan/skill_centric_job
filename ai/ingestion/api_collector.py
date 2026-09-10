@@ -1,0 +1,86 @@
+import json
+
+
+def save_jobs(jobs):
+
+    with open(
+        "ai/data/raw/jobs_raw.json",
+        "w"
+    ) as file:
+
+        json.dump(
+            jobs,
+            file,
+            indent=4
+        )
+
+    print(
+        f"{len(jobs)} jobs saved successfully!"
+    )
+
+
+sample_jobs = [
+    {
+        "id": 1,
+        "title": "Python Developer",
+        "company": "Google",
+        "description": "Looking for Python, SQL, Docker and AWS."
+    },
+    {
+        "id": 2,
+        "title": "Backend Engineer",
+        "company": "Amazon",
+        "description": "Experience with FastAPI, PostgreSQL and Docker."
+    },
+    {
+        "id": 3,
+        "title": "Frontend Developer",
+        "company": "Microsoft",
+        "description": "Need React, JavaScript, TypeScript and Git."
+    },
+    {
+        "id": 4,
+        "title": "DevOps Engineer",
+        "company": "Infosys",
+        "description": "Experience with AWS, Docker, Kubernetes and Jenkins."
+    },
+    {
+        "id": 5,
+        "title": "Full Stack Developer",
+        "company": "TCS",
+        "description": "Need React, Node.js, MongoDB and Git."
+    },
+    {
+        "id": 6,
+        "title": "Data Scientist",
+        "company": "IBM",
+        "description": "Experience with Python, Pandas, NumPy and SQL."
+    },
+    {
+        "id": 7,
+        "title": "Machine Learning Engineer",
+        "company": "Accenture",
+        "description": "Need Python, TensorFlow, PyTorch and AWS."
+    },
+    {
+        "id": 8,
+        "title": "Cloud Engineer",
+        "company": "Wipro",
+        "description": "Experience with AWS, Azure, Docker and Kubernetes."
+    },
+    {
+        "id": 9,
+        "title": "Java Developer",
+        "company": "Capgemini",
+        "description": "Need Java, Spring Boot, MySQL and Git."
+    },
+    {
+        "id": 10,
+        "title": "React Developer",
+        "company": "HCL",
+        "description": "Experience with React, JavaScript, TypeScript and Git."
+    }
+]
+
+
+save_jobs(sample_jobs)
