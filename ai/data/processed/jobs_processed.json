@@ -15,7 +15,6 @@
         "title": "Backend Engineer",
         "company": "Amazon",
         "skills": [
-            "Python",
             "PostgreSQL",
             "Docker",
             "FastAPI"
@@ -23,14 +22,13 @@
     },
     {
         "id": 3,
-        "title": "Full Stack Developer",
+        "title": "Frontend Developer",
         "company": "Microsoft",
         "skills": [
             "JavaScript",
-            "MongoDB",
+            "TypeScript",
             "Git",
-            "React",
-            "Node.js"
+            "React"
         ]
     },
     {
@@ -46,13 +44,14 @@
     },
     {
         "id": 5,
-        "title": "Software Engineer",
+        "title": "Full Stack Developer",
         "company": "TCS",
         "skills": [
-            "Java",
-            "MySQL",
+            "MongoDB",
             "Git",
-            "Spring Boot"
+            "React",
+            "Node.js",
+            "JavaScript"
         ]
     },
     {
@@ -62,7 +61,6 @@
         "skills": [
             "Python",
             "SQL",
-            "Scikit-Learn",
             "Pandas",
             "NumPy"
         ]
@@ -80,13 +78,44 @@
     },
     {
         "id": 8,
-        "title": "Frontend Developer",
+        "title": "Cloud Engineer",
         "company": "Wipro",
+        "skills": [
+            "AWS",
+            "Azure",
+            "Docker",
+            "Kubernetes"
+        ]
+    },
+    {
+        "id": 9,
+        "title": "Java Developer",
+        "company": "Capgemini",
+        "skills": [
+            "Java",
+            "MySQL",
+            "Git",
+            "Spring Boot"
+        ]
+    },
+    {
+        "id": 10,
+        "title": "React Developer",
+        "company": "HCL",
         "skills": [
             "JavaScript",
             "TypeScript",
             "Git",
             "React"
+        ]
+    },
+    {
+        "id": 999,
+        "title": "Cloud Engineer",
+        "company": "Test Company",
+        "skills": [
+            "AWS",
+            "PostgreSQL"
         ]
     }
 ]
