@@ -34,7 +34,7 @@ const login = async(req, res, next) => {
     }
 };
 
-const getMe = sync(req,res,next) => {
+const getMe = async(req,res,next) => {
     try{
         res.status(200).json({
             succcess: true,
