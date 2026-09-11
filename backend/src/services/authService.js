@@ -2,52 +2,52 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-
 const generateToken = (userId) => {
     return jwt.sign(
-        {userId},
+        { userId },
         process.env.JWT_SECRET,
-        {expiresIn: "7d"}
+        { expiresIn: "7d" }
     );
 };
 
+const registerUser = async ({ name, email, password }) => {
+    const existingUser = await User.findOne({ email });
 
-const registerUser = async({name, email,password}) => {
-    const existingUser = await User.findOne({email});
-
-    if(existingUser){
-        throw new Error("User already exits");
+    if (existingUser) {
+        throw new Error("User already exists");
     }
 
-    const hashedpassword =  await bcrypt.hash(password,10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
         name,
         email,
-        password: hashedpassword
+        password: hashedPassword
     });
 
     return {
-        user:{
+        user: {
             id: user._id,
             name: user.name,
             email: user.email
         },
-        token: generateToken(user._id);
+        token: generateToken(user._id)
     };
 };
 
+const loginUser = async ({ email, password }) => {
+    const user = await User.findOne({ email });
 
-const loginUser = async({email, password}) => {
-    const user = await User.findOne({email});
-
-    if(!user){
-        throw new Error("Invalid emial or password");
+    if (!user) {
+        throw new Error("Invalid email or password");
     }
-    const isMatch = await becrpt.compare(password,user.password);
 
+    const isMatch = await bcrypt.compare(
+        password,
+        user.password
+    );
 
-    if(!isMatch){
+    if (!isMatch) {
         throw new Error("Invalid email or password");
     }
 
@@ -57,7 +57,6 @@ const loginUser = async({email, password}) => {
             name: user.name,
             email: user.email
         },
-
         token: generateToken(user._id)
     };
 };
