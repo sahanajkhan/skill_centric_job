@@ -58,11 +58,5 @@
         "title": "React Developer",
         "company": "HCL",
         "description": "Experience with React, JavaScript, TypeScript and Git."
-    },
-    {
-    "id": 999,
-    "title": "Cloud Engineer",
-    "company": "Test Company",
-    "description": "Experience with Amazon Web Services and Postgres."
-}
+    }
 ]

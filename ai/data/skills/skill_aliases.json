@@ -1,0 +1,30 @@
+{
+    "AWS": [
+        "AWS",
+        "Amazon Web Services"
+    ],
+    "GCP": [
+        "GCP",
+        "Google Cloud Platform"
+    ],
+    "JavaScript": [
+        "JavaScript",
+        "JS"
+    ],
+    "Node.js": [
+        "Node.js",
+        "Node"
+    ],
+    "PostgreSQL": [
+        "PostgreSQL",
+        "Postgres"
+    ],
+    "Kubernetes": [
+        "Kubernetes",
+        "K8s"
+    ],
+    "PyTorch": [
+        "PyTorch",
+        "Torch"
+    ]
+}
