@@ -1,16 +1,18 @@
 {
   "programming_languages": [
-    "Python",
-    "Java",
-    "JavaScript",
-    "TypeScript",
-    "C",
-    "C++",
-    "C#",
-    "Go",
-    "Rust",
-    "PHP"
-  ],
+  "Python",
+  "Java",
+  "JavaScript",
+  "TypeScript",
+  "C",
+  "C++",
+  "C#",
+  "Go",
+  "Rust",
+  "PHP",
+  "OOP",
+  "DSA"
+],
 
   "databases": [
     "SQL",
@@ -26,25 +28,40 @@
     "GCP"
   ],
 
-  "tools": [
-    "Git",
-    "Docker",
-    "Kubernetes",
-    "Jenkins",
-    "Linux"
-  ],
+"tools": [
+  "Git",
+  "Docker",
+  "Kubernetes",
+  "Jenkins",
+  "Linux",
+  "Firebase",
+  "Postman",
+  "WebRTC",
+  "ZegoCloud"
+],
 
-  "frameworks": [
-    "React",
-    "Angular",
-    "Vue",
-    "Node.js",
-    "Express",
-    "FastAPI",
-    "Django",
-    "Flask",
-    "Spring Boot"
-  ],
+"frameworks": [
+  "React",
+  "Angular",
+  "Vue",
+  "Node.js",
+  "Express",
+  "FastAPI",
+  "Django",
+  "Flask",
+  "Spring Boot",
+  "Next.js",
+  "NestJS",
+  "Three.js"
+],
+
+"web": [
+  "HTML5",
+  "CSS3",
+  "Tailwind CSS",
+  "JWT",
+  "RESTful APIs"
+],
 
   "devops": [
   "Terraform",
