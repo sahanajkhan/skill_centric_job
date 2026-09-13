@@ -60,7 +60,36 @@ const updateProfile = async(req, res,next) => {
     }
 };
 
+const uploadResume = async (req, res, next) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Resume file is required"
+            });
+        }
+
+        const user = await User.findById(req.user._id);
+
+        user.resume = {
+            filename: req.file.filename,
+            path: req.file.path
+        };
+
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Resume uploaded successfully",
+            data: user.resume
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getprofile,
-    updateProfile
+    updateProfile,
+    uploadResume
 };
