@@ -1,45 +1,38 @@
 const User = require("../models/User");
-const user = require("../models/User");
 
-const getprofile = async(req, res, next) => {
-    try{
-        const user = await User.findbyId(req.user._id)
-        .populate("skills")
-        .select("-password");
-
+const getProfile = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.user._id)
+            .populate("skills")
+            .select("-password");
 
         res.status(200).json({
-            sucess: true,
+            success: true,
             data: user
         });
-
-    }
-    catch(error){
+    } catch (error) {
         next(error);
-    
     }
 };
 
-
-const updateProfile = async(req, res,next) => {
-    try{ 
-        const{name, email} = req.body;
+const updateProfile = async (req, res, next) => {
+    try {
+        const { name, email } = req.body;
 
         const user = await User.findById(req.user._id);
 
-        if(!user){
+        if (!user) {
             return res.status(404).json({
-                success:false,
-                message:"user not found"
+                success: false,
+                message: "User not found"
             });
-
         }
 
-        if(name){
+        if (name) {
             user.name = name;
         }
 
-        if(email){
+        if (email) {
             user.email = email;
         }
 
@@ -47,15 +40,14 @@ const updateProfile = async(req, res,next) => {
 
         res.status(200).json({
             success: true,
-            message: "Profile updated sucessfully",
-            data:{
+            message: "Profile updated successfully",
+            data: {
                 id: user._id,
                 name: user.name,
                 email: user.email
             }
         });
-    }
-    catch(error){
+    } catch (error) {
         next(error);
     }
 };
@@ -70,6 +62,13 @@ const uploadResume = async (req, res, next) => {
         }
 
         const user = await User.findById(req.user._id);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
 
         user.resume = {
             filename: req.file.filename,
@@ -89,7 +88,7 @@ const uploadResume = async (req, res, next) => {
 };
 
 module.exports = {
-    getprofile,
+    getProfile,
     updateProfile,
     uploadResume
 };

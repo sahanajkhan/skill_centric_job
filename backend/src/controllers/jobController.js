@@ -7,7 +7,7 @@ const createJob = async(req, resizeBy,next) => {
         const job = await jobService.createJob(req.body);
 
         res.status(201).json({
-            sucess: true,
+            success: true,
             message:"job created sucessfully",
             data: job
         });
@@ -17,7 +17,7 @@ const createJob = async(req, resizeBy,next) => {
 };
 
 
-const getjobs = async (req,res,next) => {
+const getJobs = async (req,res,next) => {
     try{
         const {
             search,
@@ -27,7 +27,7 @@ const getjobs = async (req,res,next) => {
             limit
         } = req.query;
 
-        const result = await jobService.getjobs({
+        const result = await jobService.getJobs({
             search,
             location,
             jobType,
@@ -36,7 +36,7 @@ const getjobs = async (req,res,next) => {
         });
 
         res.status(200).json({
-            sucess:true,
+            success:true,
             data:result
         });
     }
