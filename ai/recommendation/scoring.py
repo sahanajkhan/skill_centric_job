@@ -1,13 +1,48 @@
-def calculate_match_score(user_skills, job_skills):
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-    user_skills = set(user_skills)
-    job_skills = set(job_skills)
 
-    matching_skills = user_skills.intersection(job_skills)
+def calculate_match_score(
+    user_skills,
+    job_skills
+):
 
-    score = (
-        len(matching_skills)
-        / len(job_skills)
-    ) * 100
+    user_text = " ".join(user_skills)
+    job_text = " ".join(job_skills)
 
-    return round(score, 2), list(matching_skills)
+    documents = [
+        user_text,
+        job_text
+    ]
+
+    vectorizer = TfidfVectorizer()
+
+    tfidf_matrix = vectorizer.fit_transform(
+        documents
+    )
+
+    similarity = cosine_similarity(
+        tfidf_matrix[0:1],
+        tfidf_matrix[1:2]
+    )[0][0]
+
+    matching_skills = list(
+        set(user_skills).intersection(
+            set(job_skills)
+        )
+    )
+
+    missing_skills = list(
+        set(job_skills) - set(user_skills)
+    )
+
+    score = round(
+        similarity * 100,
+        2
+    )
+
+    return (
+        score,
+        matching_skills,
+        missing_skills
+    )
