@@ -1,6 +1,6 @@
-const job = require("../models/Job");
+const Job = require("../models/Job");
 
-const creatjob = async(jobData) => {
+const createJob = async(jobData) => {
 
     const job = await Job.create(jobData);
 
@@ -55,13 +55,13 @@ const getJobs = async({
 
     const skip = (page - 1) * limit;
 
-    const jobs = await job.find(filter)
+    const jobs = await Job.find(filter)
     .populate("skills")
-    .sort(skip)
+    .skip(skip)
     .limit(Number(limit));
 
 
-    const total = await job.countDocuments(filter);
+    const total = await Job.countDocuments(filter);
 
 
     return{
@@ -77,7 +77,7 @@ const getJobs = async({
 
 
 const getJobById = async(jobId) => {
-    const job = await job.findbyId(jobId)
+    const job = await Job.findById(jobId)
     .populate("skills");
 
 

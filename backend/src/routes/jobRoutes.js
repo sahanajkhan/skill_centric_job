@@ -4,15 +4,15 @@ const express = require("express");
 
 const {
     createJob,
-    getJObs,
-    getJobByid
-} = reuire("../controllers/jobController");
+    getJobs,
+    getJobById
+} = require("../controllers/jobController");
 
 
 const router = express.Router();
 
 router.post("/", createJob);
-router.get("/",getJObs);
-router.get("/:jobId", getJobByid);
+router.get("/", getJobs);
+router.get("/:jobId", getJobById);
 
 module.exports = router;
