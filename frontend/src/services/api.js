@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { MOCK_JOBS, MOCK_USER_SKILLS } from '../utils/constants';
 
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = 'http://localhost:5000/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -10,16 +10,35 @@ const api = axios.create({
   },
 });
 
+// Add a request interceptor to attach the token to all requests
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
 // Mock State for MVP
 let mockSkills = [...MOCK_USER_SKILLS];
 
 // === AUTHENTICATION API ===
-export const login = async (credentials) => {
-  return new Promise(resolve => resolve({ data: { token: 'mock-token', user: { id: 1, name: 'Student' } } }));
+export const loginUser = async (credentials) => {
+  return await api.post('/auth/login', credentials);
 };
 
-export const register = async (userData) => {
-  return new Promise(resolve => resolve({ data: { token: 'mock-token', user: { id: 1, ...userData } } }));
+export const registerUser = async (userData) => {
+  return await api.post('/auth/register', userData);
+};
+
+export const googleLoginUser = async (token) => {
+  return await api.post('/auth/google', { token });
+};
+
+export const getCurrentUser = async () => {
+  return await api.get('/auth/me');
 };
 
 // === SKILLS API ===
