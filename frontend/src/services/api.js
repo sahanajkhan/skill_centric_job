@@ -41,6 +41,10 @@ export const getCurrentUser = async () => {
   return await api.get('/auth/me');
 };
 
+export const updateUserProfile = async (profileData) => {
+  return await api.put('/users/profile', profileData);
+};
+
 // === SKILLS API ===
 export const getSkills = async () => {
   return new Promise(resolve => resolve({ data: mockSkills }));
@@ -74,17 +78,7 @@ export const uploadResume = async (file) => {
 
 // === JOBS & RECOMMENDATIONS API ===
 export const getRecommendations = async () => {
-  // Simulate network
-  return new Promise(resolve => {
-    setTimeout(() => {
-      // In a real app, the backend calculates matching_skills, missing_skills, and match_score.
-      // Since our mock data already has these pre-calculated for the default MOCK_USER_SKILLS, 
-      // we'll just return the mock jobs directly for the MVP demo.
-      // If mockSkills changes drastically, the mock data won't perfectly reflect it, 
-      // but it's enough to demonstrate the UI workflow.
-      resolve({ data: MOCK_JOBS });
-    }, 800);
-  });
+  return await api.get('/recommendations');
 };
 
 export const getJobById = async (jobId) => {

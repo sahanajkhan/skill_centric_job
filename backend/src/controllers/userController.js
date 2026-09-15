@@ -17,7 +17,7 @@ const getProfile = async (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
     try {
-        const { name, email } = req.body;
+        const { name, email, bio, title, experience, education, socialLinks } = req.body;
 
         const user = await User.findById(req.user._id);
 
@@ -28,13 +28,13 @@ const updateProfile = async (req, res, next) => {
             });
         }
 
-        if (name) {
-            user.name = name;
-        }
-
-        if (email) {
-            user.email = email;
-        }
+        if (name) user.name = name;
+        if (email) user.email = email;
+        if (bio !== undefined) user.bio = bio;
+        if (title !== undefined) user.title = title;
+        if (experience) user.experience = experience;
+        if (education) user.education = education;
+        if (socialLinks) user.socialLinks = socialLinks;
 
         await user.save();
 
