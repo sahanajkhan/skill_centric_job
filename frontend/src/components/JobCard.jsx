@@ -1,67 +1,129 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Briefcase, Check, X, ExternalLink } from 'lucide-react';
+import { MapPin, Globe, ExternalLink, Bookmark, CheckCircle, Calendar, Sparkles } from 'lucide-react';
+import MatchScore from './MatchScore';
+import SkillTag from './SkillTag';
+import { useJobs } from '../context/JobContext';
 
 const JobCard = ({ job }) => {
+  const { isJobSaved, saveJob, removeSavedJob, hasApplied, applyToJob } = useJobs();
   
-  const getScoreClass = (score) => {
-    if (score >= 80) return 'match-high';
-    if (score >= 50) return 'match-medium';
-    return 'match-low';
+  const jobId = job.id || job.jobId;
+  const saved = isJobSaved(jobId);
+  const applied = hasApplied(jobId);
+  
+  const matched = job.matchedSkills || [];
+  const missing = job.missingSkills || [];
+  const allSkills = job.skills || [];
+  
+  const handleToggleSave = async (e) => {
+    e.preventDefault();
+    if (saved) {
+      await removeSavedJob(jobId);
+    } else {
+      await saveJob(job);
+    }
+  };
+
+  const handleQuickApply = async (e) => {
+    e.preventDefault();
+    if (!applied) {
+      await applyToJob(job);
+    }
+    if (job.jobUrl) {
+      window.open(job.jobUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
-    <div className="card job-card">
+    <div className="job-card">
       <div className="job-card-header">
         <div>
-          <h3 className="job-title">{job.title}</h3>
+          <h3 className="job-title">
+            <Link to={`/jobs/${jobId}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+              {job.title}
+            </Link>
+          </h3>
           <div className="job-company">{job.company}</div>
           
           <div className="job-meta">
-            <span className="flex items-center gap-2"><MapPin size={14} /> {job.location}</span>
-            <span className="flex items-center gap-2"><Briefcase size={14} /> {job.job_type}</span>
-            <span style={{ fontWeight: '500' }}>{job.salary}</span>
+            <span className="meta-item">
+              <MapPin size={14} /> {job.location || 'Remote'}
+            </span>
+            {job.remote && (
+              <span className="remote-pill">
+                <Globe size={12} /> Remote
+              </span>
+            )}
+            <span className="source-badge">{job.source || 'Aggregator'}</span>
+            {job.postedAt && (
+              <span className="meta-item">
+                <Calendar size={13} /> {job.postedAt}
+              </span>
+            )}
           </div>
         </div>
-        
-        <div className={`match-score-badge ${getScoreClass(job.match_score)}`}>
-          {job.match_score}% Match
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <MatchScore score={job.matchPercentage !== undefined ? job.matchPercentage : 70} />
+          <button
+            onClick={handleToggleSave}
+            className="btn btn-secondary"
+            style={{ padding: '0.5rem', color: saved ? 'var(--primary)' : 'var(--text-muted)' }}
+            title={saved ? 'Remove from saved' : 'Save job'}
+          >
+            <Bookmark size={18} fill={saved ? 'var(--primary)' : 'none'} />
+          </button>
         </div>
       </div>
-      
-      <div className="mt-4">
-        <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>Skills Match:</div>
-        <div className="flex" style={{ flexWrap: 'wrap' }}>
-          {job.matching_skills.map(skill => (
-            <span key={skill} className="skill-badge skill-matching">
-              <Check size={12} /> {skill}
-            </span>
+
+      {/* Matching Reasons */}
+      {job.matchingReasons && job.matchingReasons.length > 0 && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: '#4338CA', background: '#EEF2FF', padding: '0.4rem 0.75rem', borderRadius: '6px' }}>
+          <Sparkles size={14} />
+          <span>{job.matchingReasons[0]}</span>
+        </div>
+      )}
+
+      {/* Skills breakdown */}
+      <div>
+        <div style={{ fontSize: '0.825rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.4rem' }}>
+          SKILLS BREAKDOWN:
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {matched.map(s => (
+            <SkillTag key={`matched-${s}`} name={s} type="matching" />
           ))}
-          {job.missing_skills.map(skill => (
-            <span key={skill} className="skill-badge skill-missing">
-              <X size={12} /> {skill}
-            </span>
+          {missing.slice(0, 4).map(s => (
+            <SkillTag key={`missing-${s}`} name={s} type="missing" />
+          ))}
+          {matched.length === 0 && missing.length === 0 && allSkills.slice(0, 6).map(s => (
+            <SkillTag key={`neutral-${s}`} name={s} type="neutral" />
           ))}
         </div>
       </div>
-      
-      <div className="mt-4 flex justify-between items-center" style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
-        <div>
-          <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Available on: </span>
-          {job.sources.map(source => (
-            <span key={source.name} className="source-badge" style={{ marginLeft: '0.5rem' }}>
-              {source.name}
-            </span>
-          ))}
-        </div>
-        
-        <div className="flex gap-4">
-          <Link to={`/jobs/${job.id}`} className="btn btn-secondary">
-            View Details
-          </Link>
-          <a href={job.sources[0].url} target="_blank" rel="noreferrer" className="btn btn-primary">
-            Apply Now <ExternalLink size={14} />
-          </a>
+
+      {/* Action Footer */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.75rem', borderTop: '1px solid var(--border)', marginTop: '0.5rem' }}>
+        <Link to={`/jobs/${jobId}`} style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--primary)' }}>
+          View Match Analysis &rarr;
+        </Link>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button
+            onClick={handleQuickApply}
+            className={`btn ${applied ? 'btn-secondary' : 'btn-primary'}`}
+            style={{ fontSize: '0.85rem' }}
+          >
+            {applied ? (
+              <>
+                <CheckCircle size={14} color="var(--success)" /> Applied (Open Portal)
+              </>
+            ) : (
+              <>
+                Apply on {job.source?.split(' ')[0] || 'Source'} <ExternalLink size={14} />
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>

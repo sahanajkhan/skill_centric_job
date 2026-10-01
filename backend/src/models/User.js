@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema(
             required: true,
             trim: true
         },
-
         email: {
             type: String,
             required: true,
@@ -15,34 +14,46 @@ const userSchema = new mongoose.Schema(
             lowercase: true,
             trim: true
         },
-
         password: {
             type: String,
             required: true,
-           minLength: 6
+            minLength: 6
         },
-
         skills: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Skill"
             }
         ],
-
-
+        manualSkills: [
+            {
+                type: String,
+                trim: true
+            }
+        ],
+        targetRole: {
+            type: String,
+            default: "Full Stack Developer",
+            trim: true
+        },
+        experienceLevel: {
+            type: String,
+            enum: ["Entry / Junior", "Mid", "Senior", "Lead"],
+            default: "Mid"
+        },
+        preferredRemote: {
+            type: Boolean,
+            default: true
+        },
         resume: {
             filename: String,
-            path: String
+            path: String,
+            extractedSkills: [String]
         }
-
     },
-
-
     {
         timestamps: true
     }
 );
-
-
 
 module.exports = mongoose.model("User", userSchema);
