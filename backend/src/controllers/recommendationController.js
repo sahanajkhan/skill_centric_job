@@ -1,61 +1,99 @@
-const jobService = require("../services/jobService");
-const User = require("../models/User");
+const aiService = require("../services/aiService");
+const userService = require("../services/userService");
 
-const getRecommendations = async (req, res, next) => {
+const getSkillAnalysis = async (req, res, next) => {
     try {
-        const user = await User.findById(req.user._id).populate("skills");
-        
-        if (!user || user.skills.length === 0) {
-            return res.status(200).json({
-                success: true,
-                message: "No skills found to generate recommendations",
-                data: []
-            });
+        const user = req.user;
+        let skills = [];
+        if (user.skills && user.skills.length) {
+            skills = user.skills.map(s => (typeof s === "object" ? s.name : s));
+        }
+        if (user.manualSkills && user.manualSkills.length) {
+            skills = [...new Set([...skills, ...user.manualSkills])];
+        }
+        if (user.resume && user.resume.extractedSkills) {
+            skills = [...new Set([...skills, ...user.resume.extractedSkills])];
         }
 
-        // Fetch AI recommendations from FastAPI
-        const axios = require('axios');
-        let aiData;
-        try {
-            const response = await axios.get('http://localhost:8000/api/recommendations');
-            aiData = response.data;
-        } catch (error) {
-            console.error("Failed to fetch from AI backend:", error);
-            return res.status(500).json({
-                success: false,
-                message: "Failed to connect to AI recommendation engine",
-                error: error.message
-            });
-        }
-
-        // Map AI data to frontend expected format
-        const formattedJobs = (aiData.top_jobs || []).map((job, index) => ({
-            id: index + 1000, // Generate a unique ID for mock purposes
-            title: job.title,
-            company: job.company,
-            location: "Remote",
-            salary: "Competitive",
-            job_type: "Full-time",
-            experience: "Flexible",
-            description: "AI Recommended Job based on your skills.",
-            required_skills: [...(job.matching_skills || []), ...(job.missing_skills || [])],
-            matching_skills: job.matching_skills || [],
-            missing_skills: job.missing_skills || [],
-            match_score: Math.round(job.score || 0),
-            sources: [
-                { name: "AI Match", url: "#" }
-            ]
-        }));
-
+        const analysis = await aiService.analyzeSkills(skills, user.targetRole);
         res.status(200).json({
             success: true,
-            data: formattedJobs
+            data: analysis
         });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
+    }
+};
+
+const getRecommendedProjects = async (req, res, next) => {
+    try {
+        const user = req.user;
+        let skills = [];
+        if (user.skills && user.skills.length) {
+            skills = user.skills.map(s => (typeof s === "object" ? s.name : s));
+        }
+        if (user.manualSkills) {
+            skills = [...new Set([...skills, ...user.manualSkills])];
+        }
+
+        const projects = await aiService.recommendProjects(skills, user.targetRole);
+        res.status(200).json({
+            success: true,
+            data: projects
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const generateProject = async (req, res, next) => {
+    try {
+        const {
+            targetRole,
+            existingSkills,
+            missingSkills,
+            difficulty,
+            preferredStack,
+            jobRequirements
+        } = req.body;
+
+        const blueprint = await aiService.generateProjectPlan({
+            targetRole: targetRole || req.user.targetRole || "Full Stack Developer",
+            existingSkills: existingSkills || req.user.manualSkills || [],
+            missingSkills: missingSkills || ["Docker", "AWS"],
+            difficulty: difficulty || "Intermediate",
+            preferredStack: preferredStack || "Fullstack",
+            jobRequirements: jobRequirements || ""
+        });
+
+        // Persist for user history
+        const saved = await userService.saveGeneratedProject(req.user._id, blueprint);
+
+        res.status(201).json({
+            success: true,
+            message: "Project blueprint generated successfully",
+            data: saved
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const getUserProjects = async (req, res, next) => {
+    try {
+        const projects = await userService.getUserProjects(req.user._id);
+        res.status(200).json({
+            success: true,
+            data: projects
+        });
+    } catch (err) {
+        next(err);
     }
 };
 
 module.exports = {
-    getRecommendations
+    getSkillAnalysis,
+    getRecommendedProjects,
+    generateProject,
+    getUserProjects
 };

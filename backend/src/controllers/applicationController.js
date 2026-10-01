@@ -1,64 +1,45 @@
+const userService = require("../services/userService");
 
-
-const applicationService = require("../services/applicationService");
-
-const applyForJob = async (req, res, next) => {
+const applyToJob = async (req, res, next) => {
     try {
-        const application =
-            await applicationService.applyForJob(
-                req.user._id,
-                req.params.jobId
-            );
-
+        const { jobId, jobTitle, company, notes } = req.body;
+        if (!jobId || !jobTitle || !company) {
+            return res.status(400).json({
+                success: false,
+                message: "jobId, jobTitle, and company are required"
+            });
+        }
+        const application = await userService.applyToJob(
+            req.user._id,
+            jobId,
+            jobTitle,
+            company,
+            notes
+        );
         res.status(201).json({
             success: true,
-            message: "Application created successfully",
+            message: "Application recorded successfully",
             data: application
         });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 
 const getApplications = async (req, res, next) => {
     try {
-        const applications =
-            await applicationService.getApplications(
-                req.user._id
-            );
-
+        const applications = await userService.getApplications(req.user._id);
         res.status(200).json({
             success: true,
+            count: applications.length,
             data: applications
         });
-    } catch (error) {
-        next(error);
-    }
-};
-
-const updateApplicationStatus = async (req, res, next) => {
-    try {
-        const { status } = req.body;
-
-        const application =
-            await applicationService.updateApplicationStatus(
-                req.user._id,
-                req.params.applicationId,
-                status
-            );
-
-        res.status(200).json({
-            success: true,
-            message: "Application status updated",
-            data: application
-        });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 
 module.exports = {
-    applyForJob,
-    getApplications,
-    updateApplicationStatus
+    applyToJob,
+    getApplications
 };

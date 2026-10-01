@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema(
             required: true,
             trim: true
         },
-
         email: {
             type: String,
             required: true,
@@ -15,80 +14,46 @@ const userSchema = new mongoose.Schema(
             lowercase: true,
             trim: true
         },
-
         password: {
             type: String,
-            required: function() { return this.authProvider === 'local'; },
+            required: true,
             minLength: 6
         },
-
-        authProvider: {
-            type: String,
-            enum: ['local', 'google'],
-            default: 'local'
-        },
-
-        googleId: {
-            type: String,
-            unique: true,
-            sparse: true
-        },
-
         skills: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Skill"
             }
         ],
-
+        manualSkills: [
+            {
+                type: String,
+                trim: true
+            }
+        ],
+        targetRole: {
+            type: String,
+            default: "Full Stack Developer",
+            trim: true
+        },
+        experienceLevel: {
+            type: String,
+            enum: ["Entry / Junior", "Mid", "Senior", "Lead"],
+            default: "Mid"
+        },
+        preferredRemote: {
+            type: Boolean,
+            default: true
+        },
         resume: {
             filename: String,
-            path: String
-        },
-
-        bio: {
-            type: String,
-            default: ''
-        },
-
-        title: {
-            type: String,
-            default: ''
-        },
-
-        experience: [
-            {
-                company: String,
-                role: String,
-                startDate: String,
-                endDate: String,
-                description: String
-            }
-        ],
-
-        education: [
-            {
-                institution: String,
-                degree: String,
-                year: String
-            }
-        ],
-
-        socialLinks: {
-            linkedin: { type: String, default: '' },
-            github: { type: String, default: '' },
-            portfolio: { type: String, default: '' }
+            path: String,
+            extractedSkills: [String]
         }
-
-
     },
-
-
     {
         timestamps: true
     }
 );
-
-
 
 module.exports = mongoose.model("User", userSchema);

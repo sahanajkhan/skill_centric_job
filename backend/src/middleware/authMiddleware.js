@@ -8,7 +8,7 @@ const protect = async(req,res,next) => {
         if(!authHeader || !authHeader.startsWith("Bearer")){
             return res.status(401).json({
                 success: false,
-                meassage: "Authentication required"
+                message: "Authentication required"
             });
         }
 
@@ -21,12 +21,12 @@ const protect = async(req,res,next) => {
     );
 
 
-    const uset = await User.findById(decoded.userId).select("-password");
+    const user = await User.findById(decoded.userId).populate("skills").select("-password");
 
     if(!user){
         return res.status(401).json({
             success: false,
-            message: " user not found"
+            message: "User not found"
         });
     }
 
@@ -37,7 +37,7 @@ const protect = async(req,res,next) => {
     catch(error){
         return res.status(401).json({
             success: false,
-            message: "invlid or expired token"
+            message: "Invalid or expired token"
         });
     }
 };

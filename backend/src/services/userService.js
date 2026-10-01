@@ -1,51 +1,59 @@
 const User = require("../models/User");
-const Skill = require("../models/Skill");
+const SavedJob = require("../models/SavedJob");
+const Application = require("../models/Application");
+const GeneratedProject = require("../models/GeneratedProject");
 
-const getUserProfile = async (userId) => {
-    const user = await User.findById(userId).populate("skills");
-    if (!user) {
-        throw new Error("User not found");
+const userService = {
+    updateProfile: async (userId, updateData) => {
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { $set: updateData },
+            { new: true, runValidators: true }
+        ).populate("skills").select("-password");
+        return user;
+    },
+
+    saveJob: async (userId, jobId, jobDetails, notes = "") => {
+        const saved = await SavedJob.findOneAndUpdate(
+            { user: userId, jobId },
+            { $set: { jobDetails, notes } },
+            { upsert: true, new: true }
+        );
+        return saved;
+    },
+
+    getSavedJobs: async (userId) => {
+        return await SavedJob.find({ user: userId }).sort({ createdAt: -1 });
+    },
+
+    removeSavedJob: async (userId, jobId) => {
+        return await SavedJob.findOneAndDelete({ user: userId, jobId });
+    },
+
+    applyToJob: async (userId, jobId, jobTitle, company, notes = "") => {
+        const application = await Application.findOneAndUpdate(
+            { user: userId, jobId },
+            { $set: { jobTitle, company, notes, status: "applied", appliedDate: new Date() } },
+            { upsert: true, new: true }
+        );
+        return application;
+    },
+
+    getApplications: async (userId) => {
+        return await Application.find({ user: userId }).sort({ appliedDate: -1 });
+    },
+
+    saveGeneratedProject: async (userId, projectData) => {
+        const project = await GeneratedProject.create({
+            user: userId,
+            ...projectData
+        });
+        return project;
+    },
+
+    getUserProjects: async (userId) => {
+        return await GeneratedProject.find({ user: userId }).sort({ createdAt: -1 });
     }
-    return user;
 };
 
-const updateUserProfile = async (userId, updateData) => {
-    const user = await User.findByIdAndUpdate(userId, updateData, { new: true, runValidators: true }).populate("skills");
-    if (!user) {
-        throw new Error("User not found");
-    }
-    return user;
-};
-
-const addUserSkill = async (userId, skillId) => {
-    const user = await User.findById(userId);
-    if (!user) {
-        throw new Error("User not found");
-    }
-    
-    if (user.skills.includes(skillId)) {
-        throw new Error("Skill already added to user");
-    }
-
-    user.skills.push(skillId);
-    await user.save();
-    return await User.findById(userId).populate("skills");
-};
-
-const removeUserSkill = async (userId, skillId) => {
-    const user = await User.findById(userId);
-    if (!user) {
-        throw new Error("User not found");
-    }
-
-    user.skills = user.skills.filter(id => id.toString() !== skillId.toString());
-    await user.save();
-    return await User.findById(userId).populate("skills");
-};
-
-module.exports = {
-    getUserProfile,
-    updateUserProfile,
-    addUserSkill,
-    removeUserSkill
-};
+module.exports = userService;

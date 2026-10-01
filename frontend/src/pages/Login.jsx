@@ -1,100 +1,98 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { LogIn, Target, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { GoogleLogin } from '@react-oauth/google';
-import '../styles/Auth.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, googleLogin } = useAuth();
+
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    
-    const success = await login({ email, password });
-    if (success) {
-      navigate('/dashboard'); // or home, wherever you want them to go
-    } else {
-      setError('Invalid email or password');
-    }
-    setLoading(false);
-  };
 
-  const handleGoogleSuccess = async (credentialResponse) => {
-    const success = await googleLogin(credentialResponse.credential);
-    if (success) {
+    const res = await login({ email, password });
+    setLoading(false);
+
+    if (res.success) {
       navigate('/dashboard');
     } else {
-      setError('Google login failed');
+      setError(res.message || 'Invalid credentials');
     }
-  };
-
-  const handleGoogleError = () => {
-    setError('Google login was unsuccessful');
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h2>Welcome Back</h2>
-        <p className="auth-subtitle">Log in to continue to SkillCentric</p>
-        
-        {error && <div className="auth-error">{error}</div>}
-        
-        <form onSubmit={handleSubmit} className="auth-form">
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input 
-              type="email" 
-              id="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              required 
-              placeholder="Enter your email"
+    <div className="main-content container" style={{ maxWidth: '440px', paddingTop: '4rem' }}>
+      <div className="card" style={{ padding: '2.5rem' }}>
+        <div className="text-center" style={{ marginBottom: '2rem' }}>
+          <div style={{ display: 'inline-flex', padding: '0.75rem', background: '#EEF2FF', borderRadius: '12px', color: 'var(--primary)', marginBottom: '0.75rem' }}>
+            <Target size={32} />
+          </div>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Welcome Back</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
+            Sign in to access your skill-centric job feed
+          </p>
+        </div>
+
+        {error && (
+          <div style={{ padding: '0.75rem', background: '#FEF2F2', border: '1px solid #FECACA', color: '#991B1B', borderRadius: '6px', fontSize: '0.85rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <AlertCircle size={16} /> {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: '1.25rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.4rem' }}>
+              Email Address
+            </label>
+            <input
+              type="email"
+              required
+              className="search-input"
+              style={{ paddingLeft: '1rem' }}
+              placeholder="candidate@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input 
-              type="password" 
-              id="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              required 
-              placeholder="Enter your password"
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.4rem' }}>
+              Password
+            </label>
+            <input
+              type="password"
+              required
+              className="search-input"
+              style={{ paddingLeft: '1rem' }}
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          
-          <button type="submit" className="btn-primary auth-submit" disabled={loading}>
-            {loading ? 'Logging in...' : 'Log In'}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn btn-primary"
+            style={{ width: '100%', padding: '0.75rem', fontSize: '1rem' }}
+          >
+            {loading ? 'Authenticating...' : 'Sign In'}
           </button>
         </form>
-        
-        <div className="auth-divider">
-          <span>OR</span>
+
+        <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+          Don't have an account?{' '}
+          <Link to="/register" style={{ color: 'var(--primary)', fontWeight: 600 }}>
+            Create one free
+          </Link>
         </div>
-        
-        <div className="google-auth-wrapper">
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={handleGoogleError}
-            theme="filled_blue"
-            size="large"
-            text="continue_with"
-            width="100%"
-          />
-        </div>
-        
-        <p className="auth-redirect">
-          Don't have an account? <Link to="/register">Sign Up</Link>
-        </p>
       </div>
     </div>
   );

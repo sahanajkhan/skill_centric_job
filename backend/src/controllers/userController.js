@@ -1,94 +1,46 @@
+const userService = require("../services/userService");
 const User = require("../models/User");
 
 const getProfile = async (req, res, next) => {
     try {
-        const user = await User.findById(req.user._id)
-            .populate("skills")
-            .select("-password");
-
+        const user = await User.findById(req.user._id).populate("skills").select("-password");
         res.status(200).json({
             success: true,
             data: user
         });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 
 const updateProfile = async (req, res, next) => {
     try {
-        const { name, email, bio, title, experience, education, socialLinks } = req.body;
+        const allowedUpdates = [
+            "name",
+            "targetRole",
+            "experienceLevel",
+            "preferredRemote",
+            "manualSkills"
+        ];
+        const updateData = {};
+        allowedUpdates.forEach(key => {
+            if (req.body[key] !== undefined) {
+                updateData[key] = req.body[key];
+            }
+        });
 
-        const user = await User.findById(req.user._id);
-
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found"
-            });
-        }
-
-        if (name) user.name = name;
-        if (email) user.email = email;
-        if (bio !== undefined) user.bio = bio;
-        if (title !== undefined) user.title = title;
-        if (experience) user.experience = experience;
-        if (education) user.education = education;
-        if (socialLinks) user.socialLinks = socialLinks;
-
-        await user.save();
-
+        const updated = await userService.updateProfile(req.user._id, updateData);
         res.status(200).json({
             success: true,
             message: "Profile updated successfully",
-            data: {
-                id: user._id,
-                name: user.name,
-                email: user.email
-            }
+            data: updated
         });
-    } catch (error) {
-        next(error);
-    }
-};
-
-const uploadResume = async (req, res, next) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({
-                success: false,
-                message: "Resume file is required"
-            });
-        }
-
-        const user = await User.findById(req.user._id);
-
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found"
-            });
-        }
-
-        user.resume = {
-            filename: req.file.filename,
-            path: req.file.path
-        };
-
-        await user.save();
-
-        res.status(200).json({
-            success: true,
-            message: "Resume uploaded successfully",
-            data: user.resume
-        });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 
 module.exports = {
     getProfile,
-    updateProfile,
-    uploadResume
+    updateProfile
 };

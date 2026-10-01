@@ -1,92 +1,148 @@
 import axios from 'axios';
-import { MOCK_JOBS, MOCK_USER_SKILLS } from '../utils/constants';
 
-const BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Add a request interceptor to attach the token to all requests
+// Attach JWT token automatically
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-}, (error) => {
-  return Promise.reject(error);
-});
-
-// Mock State for MVP
-let mockSkills = [...MOCK_USER_SKILLS];
+}, (error) => Promise.reject(error));
 
 // === AUTHENTICATION API ===
-export const loginUser = async (credentials) => {
-  return await api.post('/auth/login', credentials);
+export const login = async (credentials) => {
+  const res = await api.post('/auth/login', credentials);
+  return res.data;
 };
 
-export const registerUser = async (userData) => {
-  return await api.post('/auth/register', userData);
-};
-
-export const googleLoginUser = async (token) => {
-  return await api.post('/auth/google', { token });
+export const register = async (userData) => {
+  const res = await api.post('/auth/register', userData);
+  return res.data;
 };
 
 export const getCurrentUser = async () => {
-  return await api.get('/auth/me');
+  const res = await api.get('/auth/me');
+  return res.data;
 };
 
-export const updateUserProfile = async (profileData) => {
-  return await api.put('/users/profile', profileData);
+export const updateProfile = async (profileData) => {
+  const res = await api.put('/users/profile', profileData);
+  return res.data;
 };
 
 // === SKILLS API ===
 export const getSkills = async () => {
-  return new Promise(resolve => resolve({ data: mockSkills }));
+  const res = await api.get('/skills');
+  return res.data;
 };
 
-export const addSkill = async (skill) => {
-  if (!mockSkills.includes(skill)) {
-    mockSkills = [...mockSkills, skill];
+export const addSkill = async (name, category = '') => {
+  const res = await api.post('/skills', { name, category });
+  return res.data;
+};
+
+export const removeSkill = async (skillId) => {
+  const res = await api.delete(`/skills/${skillId}`);
+  return res.data;
+};
+
+export const uploadResume = async (fileOrFormData) => {
+  let formData;
+  if (fileOrFormData instanceof FormData) {
+    formData = fileOrFormData;
+  } else {
+    formData = new FormData();
+    formData.append('resume', fileOrFormData);
   }
-  return new Promise(resolve => resolve({ data: mockSkills }));
-};
 
-export const removeSkill = async (skill) => {
-  mockSkills = mockSkills.filter(s => s !== skill);
-  return new Promise(resolve => resolve({ data: mockSkills }));
-};
-
-// === RESUME API ===
-export const uploadResume = async (file) => {
-  // Simulate AI extraction delay
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const extracted = ['React', 'Python', 'SQL', 'Git'];
-      extracted.forEach(s => {
-        if (!mockSkills.includes(s)) mockSkills.push(s);
-      });
-      resolve({ data: { extracted_skills: extracted, all_skills: mockSkills } });
-    }, 2000);
+  const res = await api.post('/skills/resume', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
+  return res.data;
 };
 
 // === JOBS & RECOMMENDATIONS API ===
-export const getRecommendations = async () => {
-  return await api.get('/recommendations');
+export const getJobs = async (params = {}) => {
+  const res = await api.get('/jobs', { params });
+  return res.data;
 };
 
 export const getJobById = async (jobId) => {
-  return new Promise((resolve, reject) => {
-    const job = MOCK_JOBS.find(j => j.id === parseInt(jobId));
-    if (job) resolve({ data: job });
-    else reject(new Error('Job not found'));
-  });
+  const res = await api.get(`/jobs/${jobId}`);
+  return res.data;
+};
+
+export const getJobFeed = async (params = {}) => {
+  const res = await api.get('/jobs/feed', { params });
+  return res.data;
+};
+
+export const syncJobs = async (options = {}) => {
+  const res = await api.post('/jobs/sync', options);
+  return res.data;
+};
+
+export const getJobSources = async () => {
+  const res = await api.get('/jobs/sources');
+  return res.data;
+};
+
+// === SAVED JOBS & APPLICATIONS ===
+export const saveJob = async (jobId, jobDetails, notes = '') => {
+  const res = await api.post('/saved-jobs', { jobId, jobDetails, notes });
+  return res.data;
+};
+
+export const getSavedJobs = async () => {
+  const res = await api.get('/saved-jobs');
+  return res.data;
+};
+
+export const removeSavedJob = async (jobId) => {
+  const res = await api.delete(`/saved-jobs/${jobId}`);
+  return res.data;
+};
+
+export const applyToJob = async (jobId, jobTitle, company, notes = '') => {
+  const res = await api.post('/applications', { jobId, jobTitle, company, notes });
+  return res.data;
+};
+
+export const getApplications = async () => {
+  const res = await api.get('/applications');
+  return res.data;
+};
+
+// === AI SKILL ANALYSIS & PROJECT BUILDER ===
+export const getSkillAnalysis = async () => {
+  const res = await api.get('/recommendations/analysis');
+  return res.data;
+};
+
+export const getRecommendedProjects = async () => {
+  const res = await api.get('/recommendations/projects');
+  return res.data;
+};
+
+export const generateProjectPlan = async (projectParams) => {
+  const res = await api.post('/recommendations/generate-project', projectParams);
+  return res.data;
+};
+
+export const getUserProjects = async () => {
+  const res = await api.get('/recommendations/user-projects');
+  return res.data;
 };
 
 export default api;

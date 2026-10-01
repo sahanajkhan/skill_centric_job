@@ -1,39 +1,47 @@
-const savedJobService = require("../services/savedJobService");
+const userService = require("../services/userService");
 
 const saveJob = async (req, res, next) => {
     try {
-        const savedJob = await savedJobService.saveJob(req.user._id, req.params.jobId);
+        const { jobId, jobDetails, notes } = req.body;
+        if (!jobId || !jobDetails) {
+            return res.status(400).json({
+                success: false,
+                message: "jobId and jobDetails are required"
+            });
+        }
+        const saved = await userService.saveJob(req.user._id, jobId, jobDetails, notes);
         res.status(201).json({
             success: true,
             message: "Job saved successfully",
-            data: savedJob
+            data: saved
         });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 
 const getSavedJobs = async (req, res, next) => {
     try {
-        const savedJobs = await savedJobService.getSavedJobs(req.user._id);
+        const saved = await userService.getSavedJobs(req.user._id);
         res.status(200).json({
             success: true,
-            data: savedJobs
+            count: saved.length,
+            data: saved
         });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 
 const removeSavedJob = async (req, res, next) => {
     try {
-        await savedJobService.removeSavedJob(req.user._id, req.params.jobId);
+        await userService.removeSavedJob(req.user._id, req.params.jobId);
         res.status(200).json({
             success: true,
-            message: "Saved job removed successfully"
+            message: "Saved job removed"
         });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 

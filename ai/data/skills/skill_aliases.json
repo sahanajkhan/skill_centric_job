@@ -1,30 +1,38 @@
 {
-    "AWS": [
-        "AWS",
-        "Amazon Web Services"
-    ],
-    "GCP": [
-        "GCP",
-        "Google Cloud Platform"
-    ],
-    "JavaScript": [
-        "JavaScript",
-        "JS"
-    ],
-    "Node.js": [
-        "Node.js",
-        "Node"
-    ],
-    "PostgreSQL": [
-        "PostgreSQL",
-        "Postgres"
-    ],
-    "Kubernetes": [
-        "Kubernetes",
-        "K8s"
-    ],
-    "PyTorch": [
-        "PyTorch",
-        "Torch"
-    ]
+  "React": ["React", "ReactJS", "React.js", "React Native"],
+  "JavaScript": ["JavaScript", "JS", "ES6", "ECMAScript"],
+  "TypeScript": ["TypeScript", "TS"],
+  "Node.js": ["Node.js", "Node", "NodeJS"],
+  "Express": ["Express", "Express.js", "ExpressJS"],
+  "MongoDB": ["MongoDB", "Mongo", "Mongoose"],
+  "PostgreSQL": ["PostgreSQL", "Postgres", "PGSQL"],
+  "MySQL": ["MySQL", "My-SQL"],
+  "Python": ["Python", "Python3", "Py"],
+  "FastAPI": ["FastAPI", "Fast API"],
+  "Django": ["Django", "Django REST"],
+  "Flask": ["Flask"],
+  "Docker": ["Docker", "Dockerized", "Containers"],
+  "Kubernetes": ["Kubernetes", "K8s"],
+  "AWS": ["AWS", "Amazon Web Services", "EC2", "S3", "Lambda"],
+  "Azure": ["Azure", "Microsoft Azure"],
+  "GCP": ["GCP", "Google Cloud Platform", "Google Cloud"],
+  "Tailwind CSS": ["Tailwind CSS", "Tailwind", "TailwindCSS"],
+  "HTML5": ["HTML5", "HTML"],
+  "CSS3": ["CSS3", "CSS"],
+  "Git": ["Git", "GitHub", "GitLab"],
+  "CI/CD": ["CI/CD", "CI", "CD", "Continuous Integration"],
+  "Machine Learning": ["Machine Learning", "ML"],
+  "Deep Learning": ["Deep Learning", "DL"],
+  "Artificial Intelligence": ["Artificial Intelligence", "AI", "GenAI"],
+  "NLP": ["NLP", "Natural Language Processing"],
+  "LLM": ["LLM", "Large Language Model", "Large Language Models"],
+  "PyTorch": ["PyTorch", "Torch"],
+  "TensorFlow": ["TensorFlow", "TF"],
+  "Scikit-Learn": ["Scikit-Learn", "Sklearn"],
+  "Next.js": ["Next.js", "NextJS", "Next"],
+  "RESTful APIs": ["RESTful APIs", "REST API", "REST APIs", "REST"],
+  "GraphQL": ["GraphQL", "GQL"],
+  "Redis": ["Redis"],
+  "Java": ["Java", "Core Java"],
+  "Spring Boot": ["Spring Boot", "SpringBoot", "Spring"]
 }

@@ -2,51 +2,70 @@ const mongoose = require("mongoose");
 
 const jobSchema = new mongoose.Schema(
     {
+        jobId: {
+            type: String,
+            required: true,
+            unique: true,
+            index: true
+        },
         title: {
             type: String,
             required: true,
-            trim: true
+            trim: true,
+            index: true
         },
         company: {
             type: String,
             required: true,
-            trim: true
-        },
-        description: {
-            type: String,
-            required: true
+            trim: true,
+            index: true
         },
         location: {
             type: String,
-            required: true
+            default: "Remote",
+            trim: true
         },
-        jobType: {
+        remote: {
+            type: Boolean,
+            default: true,
+            index: true
+        },
+        employmentType: {
             type: String,
-            enum: ["Full-time", "Part-time", "Contract", "Freelance", "Internship"],
             default: "Full-time"
         },
         skills: [
             {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Skill"
+                type: String,
+                trim: true
             }
         ],
+        description: {
+            type: String,
+            default: ""
+        },
         salary: {
             type: String,
-            default: "Not specified"
+            default: "Competitive"
         },
-        isActive: {
-            type: Boolean,
-            default: true
+        source: {
+            type: String,
+            default: "Remotive"
         },
-        postedBy: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+        jobUrl: {
+            type: String,
+            required: true
+        },
+        postedAt: {
+            type: String,
+            default: "Recent"
         }
     },
     {
         timestamps: true
     }
 );
+
+jobSchema.index({ title: "text", company: "text", description: "text", skills: "text" });
 
 module.exports = mongoose.model("Job", jobSchema);

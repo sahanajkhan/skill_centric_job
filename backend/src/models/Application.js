@@ -5,28 +5,40 @@ const applicationSchema = new mongoose.Schema(
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
+            required: true,
+            index: true
+        },
+        jobId: {
+            type: String,
             required: true
         },
-        job: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Job",
+        jobTitle: {
+            type: String,
+            required: true
+        },
+        company: {
+            type: String,
             required: true
         },
         status: {
             type: String,
-            enum: ["pending", "reviewed", "accepted", "rejected"],
-            default: "pending"
+            enum: ["applied", "interviewing", "offer", "rejected"],
+            default: "applied"
         },
-        resumeUrl: {
-            type: String
+        appliedDate: {
+            type: Date,
+            default: Date.now
         },
-        coverLetter: {
-            type: String
+        notes: {
+            type: String,
+            default: ""
         }
     },
     {
         timestamps: true
     }
 );
+
+applicationSchema.index({ user: 1, jobId: 1 }, { unique: true });
 
 module.exports = mongoose.model("Application", applicationSchema);

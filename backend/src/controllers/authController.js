@@ -10,7 +10,7 @@ const register = async(req, res, next) => {
             data: result
         });
 
-    }
+    } 
 
        catch(error){
              next(error);
@@ -24,7 +24,7 @@ const login = async(req, res, next) => {
 
         res.status(200).json({
             success: true,
-            message: " login successful",
+            message: "Login successful",
             data: result
         });
     }
@@ -56,7 +56,7 @@ const googleLogin = async (req, res, next) => {
 const getMe = async(req,res,next) => {
     try{
         res.status(200).json({
-            succcess: true,
+            success: true,
             data: req.user
         });
     }
