@@ -1,0 +1,26 @@
+{
+  "Docker": [
+    "Containers vs Virtual Machines",
+    "Docker Images",
+    "Docker Containers",
+    "Dockerfile",
+    "Docker Compose",
+    "Deploy a Project using Docker"
+  ],
+  "AWS": [
+    "Cloud Fundamentals",
+    "EC2",
+    "S3",
+    "IAM",
+    "VPC",
+    "Deploy Application on AWS"
+  ],
+  "Kubernetes": [
+    "Pods",
+    "Deployments",
+    "Services",
+    "ConfigMaps",
+    "Ingress",
+    "Deploy Containerized Applications"
+  ]
+}

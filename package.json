@@ -1,0 +1,11 @@
+{
+  "name": "skill-centric-job-root",
+  "version": "1.0.0",
+  "description": "Root package.json to fix Render deployment",
+  "private": true,
+  "scripts": {
+    "install": "cd backend && npm install",
+    "build": "cd backend && npm install",
+    "start": "cd backend && npm run start"
+  }
+}

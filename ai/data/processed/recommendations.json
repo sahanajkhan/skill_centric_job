@@ -1,0 +1,135 @@
+[
+    {
+        "title": "Full Stack Developer",
+        "company": "TCS",
+        "score": 57.97,
+        "matching_skills": [
+            "MongoDB",
+            "Node.js",
+            "Git",
+            "React",
+            "JavaScript"
+        ],
+        "missing_skills": []
+    },
+    {
+        "title": "Frontend Developer",
+        "company": "Microsoft",
+        "score": 44.94,
+        "matching_skills": [
+            "JavaScript",
+            "React",
+            "Git",
+            "TypeScript"
+        ],
+        "missing_skills": []
+    },
+    {
+        "title": "React Developer",
+        "company": "HCL",
+        "score": 44.94,
+        "matching_skills": [
+            "JavaScript",
+            "React",
+            "Git",
+            "TypeScript"
+        ],
+        "missing_skills": []
+    },
+    {
+        "title": "Backend Engineer",
+        "company": "Amazon",
+        "score": 21.51,
+        "matching_skills": [
+            "FastAPI",
+            "PostgreSQL"
+        ],
+        "missing_skills": [
+            "Docker"
+        ]
+    },
+    {
+        "title": "Java Developer",
+        "company": "Capgemini",
+        "score": 15.23,
+        "matching_skills": [
+            "MySQL",
+            "Git"
+        ],
+        "missing_skills": [
+            "Spring Boot",
+            "Java"
+        ]
+    },
+    {
+        "title": "Cloud Engineer",
+        "company": "Test Company",
+        "score": 12.16,
+        "matching_skills": [
+            "PostgreSQL"
+        ],
+        "missing_skills": [
+            "AWS"
+        ]
+    },
+    {
+        "title": "Python Developer",
+        "company": "Google",
+        "score": 0.0,
+        "matching_skills": [],
+        "missing_skills": [
+            "SQL",
+            "Python",
+            "AWS",
+            "Docker"
+        ]
+    },
+    {
+        "title": "DevOps Engineer",
+        "company": "Infosys",
+        "score": 0.0,
+        "matching_skills": [],
+        "missing_skills": [
+            "Jenkins",
+            "Docker",
+            "AWS",
+            "Kubernetes"
+        ]
+    },
+    {
+        "title": "Data Scientist",
+        "company": "IBM",
+        "score": 0.0,
+        "matching_skills": [],
+        "missing_skills": [
+            "SQL",
+            "Python",
+            "NumPy",
+            "Pandas"
+        ]
+    },
+    {
+        "title": "Machine Learning Engineer",
+        "company": "Accenture",
+        "score": 0.0,
+        "matching_skills": [],
+        "missing_skills": [
+            "Python",
+            "AWS",
+            "PyTorch",
+            "TensorFlow"
+        ]
+    },
+    {
+        "title": "Cloud Engineer",
+        "company": "Wipro",
+        "score": 0.0,
+        "matching_skills": [],
+        "missing_skills": [
+            "AWS",
+            "Docker",
+            "Azure",
+            "Kubernetes"
+        ]
+    }
+]
