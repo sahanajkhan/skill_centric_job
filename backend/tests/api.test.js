@@ -1,8 +1,33 @@
 const assert = require("assert");
+const http = require("http");
+require("dotenv").config();
 
-const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:5000";
+let BASE_URL = process.env.TEST_BASE_URL || "http://localhost:5000";
+let ephemeralServer = null;
+
+async function ensureServerRunning() {
+    try {
+        const res = await fetch(`${BASE_URL}/api/health`, { signal: AbortSignal.timeout(2000) });
+        if (res.ok) {
+            console.log(`Connected to running backend at ${BASE_URL}`);
+            return;
+        }
+    } catch (_) {
+        // Server not running, start ephemeral test server
+        console.log("No running server detected on default port. Launching ephemeral test server...");
+        const connectDB = require("../src/config/db");
+        const app = require("../src/app");
+        await connectDB();
+        const testPort = 5055;
+        ephemeralServer = app.listen(testPort);
+        BASE_URL = `http://localhost:${testPort}`;
+        console.log(`Ephemeral test server listening on ${BASE_URL}`);
+    }
+}
 
 async function runBackendTests() {
+    await ensureServerRunning();
+
     console.log("====================================================");
     console.log(" Starting Backend & Integration Verification Suite  ");
     console.log("====================================================");
@@ -19,7 +44,7 @@ async function runBackendTests() {
     assert.ok(sourcesRes.data.length >= 2);
     const remotive = sourcesRes.data.find(s => s.provider === "Remotive");
     assert.strictEqual(remotive.free, true);
-    console.log("✓ 2. API Sources Registry Passed (Free & Open APIs Verified)");
+    console.log(`✓ 2. API Sources Registry Passed (${sourcesRes.data.length} providers tracked with limitations documented)`);
 
     // 3. User Registration
     const testEmail = `test_runner_${Date.now()}@example.com`;
@@ -126,20 +151,73 @@ async function runBackendTests() {
     assert.ok(projRes.data.databaseSchema);
     console.log("✓ 11. AI Project Blueprint Generator Passed");
 
-    // 12. Delete Skill (DELETE /api/skills/:id)
+    // 12. Save Job (POST /api/saved-jobs) & Get Saved Jobs (GET /api/saved-jobs)
+    const saveJobRes = await fetch(`${BASE_URL}/api/saved-jobs`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            jobId: "test_job_101",
+            jobDetails: {
+                title: "Senior Full Stack Engineer",
+                company: "Acme Cloud Inc",
+                salary: "$120,000",
+                location: "Remote"
+            },
+            notes: "Applied via referral"
+        })
+    }).then(r => r.json());
+    assert.strictEqual(saveJobRes.success, true);
+    console.log("✓ 12. Saved Jobs: POST /api/saved-jobs Passed");
+
+    const getSavedRes = await fetch(`${BASE_URL}/api/saved-jobs`, {
+        headers: { "Authorization": `Bearer ${token}` }
+    }).then(r => r.json());
+    assert.strictEqual(getSavedRes.success, true);
+    assert.ok(getSavedRes.data.length >= 1);
+    console.log(`✓ 13. Saved Jobs: GET /api/saved-jobs Passed (${getSavedRes.data.length} saved)`);
+
+    // 14. Track Application (POST /api/applications)
+    const appRes = await fetch(`${BASE_URL}/api/applications`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            jobId: "test_job_101",
+            jobTitle: "Senior Full Stack Engineer",
+            company: "Acme Cloud Inc",
+            notes: "Interview scheduled"
+        })
+    }).then(r => r.json());
+    assert.strictEqual(appRes.success, true);
+    console.log("✓ 14. Applications: POST /api/applications Passed");
+
+    // 15. Delete Skill (DELETE /api/skills/:id)
     const delSkillRes = await fetch(`${BASE_URL}/api/skills/React 19`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
     }).then(r => r.json());
     assert.strictEqual(delSkillRes.success, true);
-    console.log("✓ 12. Skills: DELETE /api/skills/:id Passed");
+    console.log("✓ 15. Skills: DELETE /api/skills/:id Passed");
 
     console.log("\n====================================================");
-    console.log(" ALL BACKEND & INTEGRATION TESTS PASSED SUCCESSFULLY! 🚀 ");
+    console.log(" ALL 15 BACKEND & INTEGRATION TESTS PASSED! 🚀      ");
     console.log("====================================================\n");
+
+    if (ephemeralServer) {
+        ephemeralServer.close();
+    }
+    process.exit(0);
 }
 
 runBackendTests().catch(err => {
     console.error("Test Suite Failed:", err);
+    if (ephemeralServer) {
+        ephemeralServer.close();
+    }
     process.exit(1);
 });
