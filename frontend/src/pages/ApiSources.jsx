@@ -127,6 +127,11 @@ const ApiSources = () => {
                   <td>
                     <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{s.provider}</div>
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{s.apiName}</div>
+                    {s.limitation && (
+                      <div style={{ fontSize: '0.75rem', color: '#64748B', marginTop: '0.25rem', maxWidth: '300px', lineHeight: 1.35 }}>
+                        {s.limitation}
+                      </div>
+                    )}
                   </td>
                   <td>
                     {isFree && <span className="badge-free">Free / Open API</span>}
@@ -145,7 +150,7 @@ const ApiSources = () => {
                     </span>
                   </td>
                   <td>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 600, color: s.status === 'Active' ? 'var(--success)' : '#64748B' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 600, color: s.status === 'Active' ? 'var(--success)' : (s.status === 'Key Required' ? '#D97706' : '#64748B') }}>
                       ● {s.status || 'Active'}
                     </span>
                   </td>

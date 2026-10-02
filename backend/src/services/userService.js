@@ -8,7 +8,7 @@ const userService = {
         const user = await User.findByIdAndUpdate(
             userId,
             { $set: updateData },
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         ).populate("skills").select("-password");
         return user;
     },
@@ -17,7 +17,7 @@ const userService = {
         const saved = await SavedJob.findOneAndUpdate(
             { user: userId, jobId },
             { $set: { jobDetails, notes } },
-            { upsert: true, new: true }
+            { upsert: true, returnDocument: 'after' }
         );
         return saved;
     },
@@ -34,7 +34,7 @@ const userService = {
         const application = await Application.findOneAndUpdate(
             { user: userId, jobId },
             { $set: { jobTitle, company, notes, status: "applied", appliedDate: new Date() } },
-            { upsert: true, new: true }
+            { upsert: true, returnDocument: 'after' }
         );
         return application;
     },

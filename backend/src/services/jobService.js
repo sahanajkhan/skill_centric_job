@@ -1,6 +1,6 @@
 const Job = require("../models/Job");
 const aiService = require("./aiService");
-const { fetchAllProviderJobs } = require("./jobProviders");
+const { fetchAllProviderJobs, getProvidersMetadata } = require("./jobProviders");
 
 const jobService = {
     // Seed and sync jobs from AI service or direct provider fallback
@@ -194,6 +194,12 @@ const jobService = {
 
     // Return API sources registry
     getJobSources: async () => {
+        try {
+            const providerMeta = getProvidersMetadata();
+            if (providerMeta && providerMeta.length) {
+                return providerMeta;
+            }
+        } catch (_) {}
         return await aiService.getJobSources();
     }
 };

@@ -1,23 +1,15 @@
-const SavedJob = require("../models/SavedJob");
+const userService = require("./userService");
 
-const saveJob = async (userId, jobId) => {
-    const existing = await SavedJob.findOne({ user: userId, job: jobId });
-    if (existing) {
-        throw new Error("Job is already saved");
-    }
-    return await SavedJob.create({ user: userId, job: jobId });
+const saveJob = async (userId, jobId, jobDetails, notes = "") => {
+    return await userService.saveJob(userId, jobId, jobDetails, notes);
 };
 
 const getSavedJobs = async (userId) => {
-    return await SavedJob.find({ user: userId }).populate("job").sort({ createdAt: -1 });
+    return await userService.getSavedJobs(userId);
 };
 
 const removeSavedJob = async (userId, jobId) => {
-    const result = await SavedJob.findOneAndDelete({ user: userId, job: jobId });
-    if (!result) {
-        throw new Error("Saved job not found");
-    }
-    return result;
+    return await userService.removeSavedJob(userId, jobId);
 };
 
 module.exports = {

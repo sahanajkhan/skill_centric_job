@@ -1,5 +1,7 @@
 const axios = require("axios");
 
+const FormData = require("form-data");
+
 const AI_BASE_URL = process.env.AI_SERVICE_URL || "http://127.0.0.1:8000";
 
 const aiClient = axios.create({
@@ -101,18 +103,19 @@ const aiService = {
     extractResume: async (fileBuffer, filename, rawText) => {
         try {
             if (fileBuffer && filename) {
-                const formData = new FormData();
-                const blob = new Blob([fileBuffer]);
-                formData.append("file", blob, filename);
-                const res = await axios.post(`${AI_BASE_URL}/api/extract-resume`, formData, {
-                    headers: { "Content-Type": "multipart/form-data" }
+                const form = new FormData();
+                form.append("file", fileBuffer, { filename: filename || "resume.pdf" });
+                const res = await axios.post(`${AI_BASE_URL}/api/extract-resume`, form, {
+                    headers: form.getHeaders(),
+                    maxContentLength: Infinity,
+                    maxBodyLength: Infinity
                 });
                 return res.data;
             } else if (rawText) {
-                const formData = new FormData();
-                formData.append("raw_text", rawText);
-                const res = await axios.post(`${AI_BASE_URL}/api/extract-resume`, formData, {
-                    headers: { "Content-Type": "multipart/form-data" }
+                const form = new FormData();
+                form.append("raw_text", rawText);
+                const res = await axios.post(`${AI_BASE_URL}/api/extract-resume`, form, {
+                    headers: form.getHeaders()
                 });
                 return res.data;
             }
