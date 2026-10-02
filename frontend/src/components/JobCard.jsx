@@ -79,9 +79,20 @@ const JobCard = ({ job }) => {
 
       {/* Matching Reasons */}
       {job.matchingReasons && job.matchingReasons.length > 0 && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: '#4338CA', background: '#EEF2FF', padding: '0.4rem 0.75rem', borderRadius: '6px' }}>
-          <Sparkles size={14} />
-          <span>{job.matchingReasons[0]}</span>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          fontSize: '0.825rem',
+          color: '#C4B5FD',
+          background: 'rgba(139, 92, 246, 0.12)',
+          border: '1px solid rgba(139, 92, 246, 0.25)',
+          padding: '0.45rem 0.85rem',
+          borderRadius: 'var(--radius-sm)',
+          margin: '0.65rem 0'
+        }}>
+          <Sparkles size={14} color="var(--primary-hover)" />
+          <span style={{ fontWeight: 500 }}>{job.matchingReasons[0]}</span>
         </div>
       )}
 
