@@ -71,8 +71,8 @@ const ApiSources = () => {
       </div>
 
       {syncResult && (
-        <div style={{ padding: '0.9rem 1.25rem', background: '#ECFDF5', border: '1px solid #A7F3D0', color: '#065F46', borderRadius: '8px', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <CheckCircle2 size={18} /> {syncResult}
+        <div style={{ padding: '0.9rem 1.25rem', background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.35)', color: '#34D399', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 500 }}>
+          <CheckCircle2 size={18} color="var(--success)" /> {syncResult}
         </div>
       )}
 
@@ -173,8 +173,8 @@ const ApiSources = () => {
       </div>
 
       {/* Architecture Disclaimer */}
-      <div className="card" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+      <div className="card" style={{ background: 'rgba(11, 17, 32, 0.7)', border: '1px solid var(--border)' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
           <Zap size={18} color="var(--primary)" /> Extensible Provider Adapter Architecture
         </h3>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', lineHeight: 1.6 }}>

@@ -180,10 +180,31 @@ const Dashboard = () => {
                 <Link
                   key={role}
                   to={`/jobs?role=${encodeURIComponent(role)}`}
-                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 0.75rem', background: '#F8FAFC', borderRadius: '6px', fontSize: '0.875rem', color: 'var(--text-main)', fontWeight: 500 }}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '0.65rem 0.85rem',
+                    background: 'rgba(11, 17, 32, 0.7)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: '0.875rem',
+                    color: '#F8FAFC',
+                    fontWeight: 500,
+                    textDecoration: 'none',
+                    transition: 'var(--transition)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--primary)';
+                    e.currentTarget.style.background = 'rgba(139, 92, 246, 0.12)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--border)';
+                    e.currentTarget.style.background = 'rgba(11, 17, 32, 0.7)';
+                  }}
                 >
-                  <span>{role}</span>
-                  <span style={{ color: 'var(--primary)', fontSize: '0.8rem' }}>View jobs &rarr;</span>
+                  <span style={{ color: '#F8FAFC' }}>{role}</span>
+                  <span style={{ color: 'var(--primary-hover)', fontSize: '0.8rem', fontWeight: 600 }}>View jobs &rarr;</span>
                 </Link>
               ))}
             </div>
