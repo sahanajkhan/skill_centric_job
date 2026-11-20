@@ -1,0 +1,17 @@
+{
+  "Docker": [
+    "Docker Official Documentation",
+    "Docker for Beginners - YouTube",
+    "Docker Mastery Course"
+  ],
+  "AWS": [
+    "AWS Skill Builder",
+    "AWS Cloud Practitioner Course",
+    "AWS Documentation"
+  ],
+  "Kubernetes": [
+    "Kubernetes Official Docs",
+    "Kubernetes for Beginners",
+    "CKA Preparation Course"
+  ]
+}

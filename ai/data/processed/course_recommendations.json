@@ -1,0 +1,167 @@
+{
+    "Java": {
+        "roadmap": [
+            "Learn Java Basics",
+            "Practice Java Projects",
+            "Build a Mini Project using Java"
+        ],
+        "courses": [
+            "Java Official Documentation",
+            "Java Beginner Course",
+            "Java Project Tutorial"
+        ]
+    },
+    "Kubernetes": {
+        "roadmap": [
+            "Pods",
+            "Deployments",
+            "Services",
+            "ConfigMaps",
+            "Ingress",
+            "Deploy Containerized Applications"
+        ],
+        "courses": [
+            "Kubernetes Official Docs",
+            "Kubernetes for Beginners",
+            "CKA Preparation Course"
+        ]
+    },
+    "Spring Boot": {
+        "roadmap": [
+            "Learn Spring Boot Basics",
+            "Practice Spring Boot Projects",
+            "Build a Mini Project using Spring Boot"
+        ],
+        "courses": [
+            "Spring Boot Official Documentation",
+            "Spring Boot Beginner Course",
+            "Spring Boot Project Tutorial"
+        ]
+    },
+    "NumPy": {
+        "roadmap": [
+            "Learn NumPy Basics",
+            "Practice NumPy Projects",
+            "Build a Mini Project using NumPy"
+        ],
+        "courses": [
+            "NumPy Official Documentation",
+            "NumPy Beginner Course",
+            "NumPy Project Tutorial"
+        ]
+    },
+    "AWS": {
+        "roadmap": [
+            "Cloud Fundamentals",
+            "EC2",
+            "S3",
+            "IAM",
+            "VPC",
+            "Deploy Application on AWS"
+        ],
+        "courses": [
+            "AWS Skill Builder",
+            "AWS Cloud Practitioner Course",
+            "AWS Documentation"
+        ]
+    },
+    "TensorFlow": {
+        "roadmap": [
+            "Learn TensorFlow Basics",
+            "Practice TensorFlow Projects",
+            "Build a Mini Project using TensorFlow"
+        ],
+        "courses": [
+            "TensorFlow Official Documentation",
+            "TensorFlow Beginner Course",
+            "TensorFlow Project Tutorial"
+        ]
+    },
+    "Jenkins": {
+        "roadmap": [
+            "Learn Jenkins Basics",
+            "Practice Jenkins Projects",
+            "Build a Mini Project using Jenkins"
+        ],
+        "courses": [
+            "Jenkins Official Documentation",
+            "Jenkins Beginner Course",
+            "Jenkins Project Tutorial"
+        ]
+    },
+    "PyTorch": {
+        "roadmap": [
+            "Learn PyTorch Basics",
+            "Practice PyTorch Projects",
+            "Build a Mini Project using PyTorch"
+        ],
+        "courses": [
+            "PyTorch Official Documentation",
+            "PyTorch Beginner Course",
+            "PyTorch Project Tutorial"
+        ]
+    },
+    "SQL": {
+        "roadmap": [
+            "Learn SQL Basics",
+            "Practice SQL Projects",
+            "Build a Mini Project using SQL"
+        ],
+        "courses": [
+            "SQL Official Documentation",
+            "SQL Beginner Course",
+            "SQL Project Tutorial"
+        ]
+    },
+    "Pandas": {
+        "roadmap": [
+            "Learn Pandas Basics",
+            "Practice Pandas Projects",
+            "Build a Mini Project using Pandas"
+        ],
+        "courses": [
+            "Pandas Official Documentation",
+            "Pandas Beginner Course",
+            "Pandas Project Tutorial"
+        ]
+    },
+    "Azure": {
+        "roadmap": [
+            "Learn Azure Basics",
+            "Practice Azure Projects",
+            "Build a Mini Project using Azure"
+        ],
+        "courses": [
+            "Azure Official Documentation",
+            "Azure Beginner Course",
+            "Azure Project Tutorial"
+        ]
+    },
+    "Python": {
+        "roadmap": [
+            "Learn Python Basics",
+            "Practice Python Projects",
+            "Build a Mini Project using Python"
+        ],
+        "courses": [
+            "Python Official Documentation",
+            "Python Beginner Course",
+            "Python Project Tutorial"
+        ]
+    },
+    "Docker": {
+        "roadmap": [
+            "Containers vs Virtual Machines",
+            "Docker Images",
+            "Docker Containers",
+            "Dockerfile",
+            "Docker Compose",
+            "Deploy a Project using Docker"
+        ],
+        "courses": [
+            "Docker Official Documentation",
+            "Docker for Beginners - YouTube",
+            "Docker Mastery Course"
+        ]
+    }
+}

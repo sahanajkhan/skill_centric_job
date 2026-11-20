@@ -1,0 +1,112 @@
+{
+  "programming_languages": [
+  "Python",
+  "Java",
+  "JavaScript",
+  "TypeScript",
+  "C",
+  "C++",
+  "C#",
+  "Go",
+  "Rust",
+  "PHP",
+  "OOP",
+  "DSA"
+],
+
+  "databases": [
+    "SQL",
+    "MySQL",
+    "PostgreSQL",
+    "MongoDB",
+    "Redis"
+  ],
+
+  "cloud": [
+    "AWS",
+    "Azure",
+    "GCP"
+  ],
+
+"tools": [
+  "Git",
+  "Docker",
+  "Kubernetes",
+  "Jenkins",
+  "Linux",
+  "Firebase",
+  "Postman",
+  "WebRTC",
+  "ZegoCloud"
+],
+
+"frameworks": [
+  "React",
+  "Angular",
+  "Vue",
+  "Node.js",
+  "Express",
+  "FastAPI",
+  "Django",
+  "Flask",
+  "Spring Boot",
+  "Next.js",
+  "NestJS",
+  "Three.js"
+],
+
+"web": [
+  "HTML5",
+  "CSS3",
+  "Tailwind CSS",
+  "JWT",
+  "RESTful APIs"
+],
+
+  "devops": [
+  "Terraform",
+  "Ansible",
+  "Prometheus",
+  "Grafana",
+  "Helm",
+  "OpenShift",
+  "ArgoCD",
+  "CI/CD",
+  "Nginx",
+  "Apache"
+],
+
+"ai_ml": [
+  "TensorFlow",
+  "PyTorch",
+  "Keras",
+  "Scikit-Learn",
+  "OpenCV",
+  "NLP",
+  "LLM",
+  "LangChain",
+  "RAG",
+  "Hugging Face",
+  "Pandas",
+  "NumPy",
+  "Matplotlib"
+],
+
+"testing": [
+  "PyTest",
+  "JUnit",
+  "Selenium",
+  "Cypress",
+  "Postman",
+  "JMeter"
+],
+
+"mobile": [
+  "Android",
+  "iOS",
+  "Flutter",
+  "React Native",
+  "Swift",
+  "Kotlin"
+]
+}

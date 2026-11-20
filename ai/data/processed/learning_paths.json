@@ -1,0 +1,76 @@
+{
+    "Java": [
+        "Learn Java Basics",
+        "Practice Java Projects",
+        "Build a Mini Project using Java"
+    ],
+    "Kubernetes": [
+        "Pods",
+        "Deployments",
+        "Services",
+        "ConfigMaps",
+        "Ingress",
+        "Deploy Containerized Applications"
+    ],
+    "Spring Boot": [
+        "Learn Spring Boot Basics",
+        "Practice Spring Boot Projects",
+        "Build a Mini Project using Spring Boot"
+    ],
+    "NumPy": [
+        "Learn NumPy Basics",
+        "Practice NumPy Projects",
+        "Build a Mini Project using NumPy"
+    ],
+    "AWS": [
+        "Cloud Fundamentals",
+        "EC2",
+        "S3",
+        "IAM",
+        "VPC",
+        "Deploy Application on AWS"
+    ],
+    "TensorFlow": [
+        "Learn TensorFlow Basics",
+        "Practice TensorFlow Projects",
+        "Build a Mini Project using TensorFlow"
+    ],
+    "Jenkins": [
+        "Learn Jenkins Basics",
+        "Practice Jenkins Projects",
+        "Build a Mini Project using Jenkins"
+    ],
+    "PyTorch": [
+        "Learn PyTorch Basics",
+        "Practice PyTorch Projects",
+        "Build a Mini Project using PyTorch"
+    ],
+    "SQL": [
+        "Learn SQL Basics",
+        "Practice SQL Projects",
+        "Build a Mini Project using SQL"
+    ],
+    "Pandas": [
+        "Learn Pandas Basics",
+        "Practice Pandas Projects",
+        "Build a Mini Project using Pandas"
+    ],
+    "Azure": [
+        "Learn Azure Basics",
+        "Practice Azure Projects",
+        "Build a Mini Project using Azure"
+    ],
+    "Python": [
+        "Learn Python Basics",
+        "Practice Python Projects",
+        "Build a Mini Project using Python"
+    ],
+    "Docker": [
+        "Containers vs Virtual Machines",
+        "Docker Images",
+        "Docker Containers",
+        "Dockerfile",
+        "Docker Compose",
+        "Deploy a Project using Docker"
+    ]
+}
